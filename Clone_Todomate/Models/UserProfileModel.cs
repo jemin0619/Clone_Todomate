@@ -30,10 +30,5 @@ namespace Clone_Todomate.Models
             get => _userDescription;
             set => SetProperty(ref _userDescription, value);
         }
-
-        public bool isValid()
-        {
-            return UserImagePath is not null && UserName is not null && UserDescription is not null;
-        }
     }
 }

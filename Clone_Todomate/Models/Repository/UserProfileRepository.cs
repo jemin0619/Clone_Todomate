@@ -42,6 +42,7 @@ namespace Clone_Todomate.Models.Repository
                         _userProfile.UserName = newProfile.UserName;
                         _userProfile.UserDescription = newProfile.UserDescription;
                         _userProfile.UserImagePath = newProfile.UserImagePath;
+                        //_userProfile = newProfile;
                     }
 
                     return true;
@@ -65,6 +66,7 @@ namespace Clone_Todomate.Models.Repository
                 _userProfile.UserName = userProfile.UserName;
                 _userProfile.UserDescription = userProfile.UserDescription;
                 _userProfile.UserImagePath = userProfile.UserImagePath;
+                //_userProfile = userProfile;
                 return true;
             }
             catch (Exception ex)
@@ -78,5 +80,7 @@ namespace Clone_Todomate.Models.Repository
         {
             return SaveUserProfile(userProfile);
         }
+
+        
     }
 }

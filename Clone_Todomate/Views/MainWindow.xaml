@@ -8,13 +8,13 @@
         Title="MainWindow" Height="450" Width="800">
     <Grid>
         <TextBox
-            Text="{Binding UserProfileRepository.UserProfile.UserImagePath, UpdateSourceTrigger=PropertyChanged}"
+            Text="{Binding UserProfile.UserImagePath, UpdateSourceTrigger=PropertyChanged}"
             HorizontalAlignment="Left" Height="37" Margin="35,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="181"/>
         <TextBox 
-            Text="{Binding UserProfileRepository.UserProfile.UserName, UpdateSourceTrigger=PropertyChanged}"
+            Text="{Binding UserProfile.UserName, UpdateSourceTrigger=PropertyChanged}"
             HorizontalAlignment="Left" Height="37" Margin="35,141,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="181"/>
         <TextBox 
-            Text="{Binding UserProfileRepository.UserProfile.UserDescription, UpdateSourceTrigger=PropertyChanged}"
+            Text="{Binding UserProfile.UserDescription, UpdateSourceTrigger=PropertyChanged}"
             HorizontalAlignment="Left" Height="37" Margin="35,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="181"/>
         <Button
             Command="{Binding LoadCommand}"
