@@ -1,31 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using CommunityToolkit.Mvvm.ComponentModel;
+﻿using CommunityToolkit.Mvvm.ComponentModel;
 
 namespace Clone_Todomate.Models
 {
-    public class UserProfileModel : ObservableObject
+    public partial class UserProfileModel : ObservableObject
     {
-        private string? _userImagePath;
-        private string? _userName;
-        private string? _userDescription;
-        
-        public string? UserImagePath
+        private string _userImagePath = "Default ImagePath";
+
+        private string _userName = "Default User";
+
+        private string _userDescription = "Default Description";
+
+        public string UserImagePath
         {
             get => _userImagePath;
             set => SetProperty(ref _userImagePath, value);
         }
 
-        public string? UserName
+        public string UserName
         {
             get => _userName;
             set => SetProperty(ref _userName, value);
         }
 
-        public string? UserDescription
+        public string UserDescription
         {
             get => _userDescription;
             set => SetProperty(ref _userDescription, value);
