@@ -1,39 +1,32 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
 namespace Clone_Todomate.Commands
 {
-    public class RelayCommand : ICommand
+    public class RelayCommand<T> : ICommand
     {
-        private readonly Predicate<object>? _canExecute;
-        private readonly Action<object> _execute;
+        private readonly Action<T>? _execute;
+        private readonly Predicate<T>? _canExecute;
 
-        public RelayCommand(Action<object> execute) : this(execute, null){}
-
-        public RelayCommand(Action<object> execute, Predicate<object>? canExecute)
+        public RelayCommand(Action<T>? execute, Predicate<T>? canExecute = null)
         {
-            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
-            _canExecute = canExecute;
-        }
-
-        public bool CanExecute(object? parameter)
-        {
-            return (_canExecute == null) || _canExecute(parameter);
-        }
-
-        public void Execute(object? parameter)
-        {
-            _execute(parameter);
+            this._execute = execute;
+            this._canExecute = canExecute;
         }
 
         public event EventHandler? CanExecuteChanged
         {
             add { CommandManager.RequerySuggested += value; }
             remove { CommandManager.RequerySuggested -= value; }
+        }
+
+        public bool CanExecute(object? parameter)
+        {
+            return _canExecute?.Invoke((T)parameter!) ?? true;
+        }
+
+        public void Execute(object? parameter)
+        {
+            _execute?.Invoke((T)parameter!);
         }
     }
 }
