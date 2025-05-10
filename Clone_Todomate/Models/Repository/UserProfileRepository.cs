@@ -31,6 +31,10 @@ namespace Clone_Todomate.Models.Repository
 
         public bool MakeUserProfileDataFile()
         {
+            if(File.Exists(UserProfileFilePath))
+            {
+                return true; // 파일이 이미 존재하면 true 반환
+            }
             if (!Directory.Exists(DataPath))
             {
                 Directory.CreateDirectory(DataPath);
