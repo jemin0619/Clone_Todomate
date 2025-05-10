@@ -22,10 +22,7 @@ namespace Clone_Todomate.Commands
         }
         public override bool CanExecute(object? parameter)
         {
-            return _mainViewModel.UserProfile != null &&
-                    !string.IsNullOrWhiteSpace(_mainViewModel.UserProfile.UserName) &&
-                    !string.IsNullOrWhiteSpace(_mainViewModel.UserProfile.UserDescription) &&
-                    !string.IsNullOrWhiteSpace(_mainViewModel.UserProfile.UserImagePath);
+            return _mainViewModel.UserProfile != null && !string.IsNullOrWhiteSpace(_mainViewModel.UserProfile.UserName);
         }
         public override void Execute(object? parameter)
         {

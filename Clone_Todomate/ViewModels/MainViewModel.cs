@@ -8,28 +8,41 @@ namespace Clone_Todomate.ViewModels
 {
     public class MainViewModel : ViewModelBase
     {
-        private IUserProfileRepository _userProfileRepository;
+        private readonly IUserProfileRepository _userProfileRepository;
         private UserProfileModel _userProfile;
+        private UserProfileControlButtonModel _userProfileControlButton;
+
+        public UserProfileControlButtonModel UserProfileControlButton
+        {
+            get => _userProfileControlButton;
+            set => SetProperty(ref _userProfileControlButton, value);
+        }
+
         public UserProfileModel UserProfile
         {
             get => _userProfile;
             set => SetProperty(ref _userProfile, value);
         }
-        public IUserProfileRepository UserProfileRepository
-        {
-            get => _userProfileRepository;
-            set => SetProperty(ref _userProfileRepository, value);
-        }
 
-        public ICommand userProfileSaveCommand { get; set; }
-        public ICommand userProfileLoadCommand { get; set; }
+        public ICommand UserProfileSaveCommand { get; }
+        public ICommand UserProfileLoadCommand { get; }
+        public ICommand UserNameSaveEditCommand { get; }
+        public ICommand UserDescriptionSaveEditCommand { get; }
+        public ICommand UserNameEditCancelCommand { get; }
+        public ICommand UserDescriptionEditCancelCommand { get; }
 
-        public MainViewModel()
+        public MainViewModel(IUserProfileRepository userProfileRepository)
         {
-            _userProfileRepository = new UserProfileRepository();
+            _userProfileRepository = userProfileRepository;
+            _userProfileControlButton = new UserProfileControlButtonModel();
+            UserProfileSaveCommand = new UserProfileSaveCommand(this, _userProfileRepository);
+            UserProfileLoadCommand = new UserProfileLoadCommand(this, _userProfileRepository);
+            UserNameSaveEditCommand = new UserProfileSaveEditCommand(this, _userProfileRepository, "Name");
+            UserDescriptionSaveEditCommand = new UserProfileSaveEditCommand(this, _userProfileRepository, "Description");
+            UserNameEditCancelCommand = new UserProfileEditCancelCommand(this, _userProfileRepository, "Name");
+            UserDescriptionEditCancelCommand = new UserProfileEditCancelCommand(this, _userProfileRepository, "Description");
+
             _userProfileRepository.MakeUserProfileDataFile();
-            userProfileSaveCommand = new UserProfileSaveCommand(this, _userProfileRepository);
-            userProfileLoadCommand = new UserProfileLoadCommand(this, _userProfileRepository);
             _userProfile = _userProfileRepository.GetUserProfile() ?? new UserProfileModel();
         }
     }

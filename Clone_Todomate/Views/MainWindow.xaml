@@ -4,30 +4,81 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:Clone_Todomate"
+        xmlns:local="clr-namespace:Clone_Todomate" xmlns:models="clr-namespace:Clone_Todomate.Models" xmlns:viewmodels="clr-namespace:Clone_Todomate.ViewModels" d:DataContext="{d:DesignInstance Type=viewmodels:MainViewModel}"
         mc:Ignorable="d"
         Title="MainWindow" Height="450" Width="800">
     <Window.Resources>
         <c:ImageLoaderConverter x:Key="ImageLoaderConverter" />
+        <c:BoolToEditSaveConverter x:Key="BoolToEditSaveConverter" />
     </Window.Resources>
     <Grid>
-        <TextBox
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0" Name="ViewNameGrid">
+            <TextBlock TextWrapping="Wrap" Text="프로필" Margin="0,14,0,0" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+        </Grid>
+
+        <Grid Grid.Row="1" Name="ProfileImageGrid">
+            <Image Source="{Binding UserProfile.UserImagePath, Converter={StaticResource ImageLoaderConverter}}" VerticalAlignment="Top" HorizontalAlignment="Center" Height="80" Width="80" Margin="0,10,0,0"/>
+            <Button 
+                Content="이미지 변경"
+                HorizontalAlignment="Center" VerticalAlignment="Center" Height="23" RenderTransformOrigin="0.5,0.5" Width="74" Margin="0,103,0,0"/>
+        </Grid>
+
+        <Grid Grid.Row="2" Name="ProfileDataGrid">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="10"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="5"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="1">
+                <TextBlock TextWrapping="Wrap" Text="이름" Margin="155,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center" FontSize="14" Height="21" Width="29" FontWeight="Bold"/>
+                <TextBox 
+                    IsEnabled="{Binding UserProfileControlButton.UserNameEditEnable}"
+                    Text="{Binding UserProfile.UserName,Mode=Default, UpdateSourceTrigger=PropertyChanged}" 
+                    Height="Auto" Width="320" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Right"/>
+                <Button
+                    Command="{Binding UserNameSaveEditCommand}"
+                    Content="{Binding UserProfileControlButton.UserNameEditEnable, Converter={StaticResource BoolToEditSaveConverter}}" 
+                    HorizontalAlignment="Left" Height="21" VerticalAlignment="Center" Width="34" Margin="578,0,0,0"/>
+                <Button
+                    Command="{Binding UserNameEditCancelCommand}"
+                    Content="취소" HorizontalAlignment="Left" Height="21" VerticalAlignment="Center" Width="34" Margin="624,0,0,0"/>
+            </Grid>
+            <Grid Grid.Row="3">
+                <TextBlock TextWrapping="Wrap" Text="자기소개" Margin="155,4,0,0" HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="14" Height="21" Width="58" FontWeight="Bold" RenderTransformOrigin="0.382,-1.928"/>
+                <TextBox
+                    IsEnabled="{Binding UserProfileControlButton.UserDescriptionEditEnable}"
+                    Text="{Binding UserProfile.UserDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                    Height="Auto" Width="320" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Center" TextAlignment="Right"/>
+                <Button
+                    Command="{Binding UserDescriptionSaveEditCommand}"
+                    Content="{Binding UserProfileControlButton.UserDescriptionEditEnable, Converter={StaticResource BoolToEditSaveConverter}}"
+                    HorizontalAlignment="Left" Height="21" VerticalAlignment="Center" Width="34" Margin="578,0,0,0"/>
+                <Button
+                    Command="{Binding UserDescriptionEditCancelCommand}"
+                    Content="취소" HorizontalAlignment="Left" Height="21" VerticalAlignment="Center" Width="34" Margin="624,0,0,0"/>
+            </Grid>
+
+        </Grid>
+
+        <TextBlock
             Text="{Binding UserProfile.UserImagePath, Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}"
-            HorizontalAlignment="Left" Height="37" Margin="35,79,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="181"/>
-        <TextBox 
-            Text="{Binding UserProfile.UserName,Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            HorizontalAlignment="Left" Height="37" Margin="35,141,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="181"/>
-        <TextBox 
-            Text="{Binding UserProfile.UserDescription, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
-            HorizontalAlignment="Left" Height="37" Margin="35,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="181"/>
+            Height="26" Margin="0,131,0,0" TextWrapping="Wrap" HorizontalAlignment="Center" VerticalAlignment="Top" Width="356" Grid.Row="2"/>
+
         <Button
-            Command="{Binding userProfileLoadCommand}"
-            Content="Load" HorizontalAlignment="Center" Height="36" Margin="0,80,0,0" VerticalAlignment="Top" Width="186"/>
+            Command="{Binding UserProfileLoadCommand}"
+            Content="Load" HorizontalAlignment="Left" Height="36" Margin="238,192,0,0" VerticalAlignment="Top" Width="186" Grid.Row="2"/>
         <Button
-            Command="{Binding userProfileSaveCommand}"
-            Content="Save" HorizontalAlignment="Center" Height="36" Margin="0,155,0,0" VerticalAlignment="Top" Width="186"/>
-        <Image
-            Source="{Binding UserProfile.UserImagePath, Converter={StaticResource ImageLoaderConverter}}"
-            HorizontalAlignment="Left" Height="100" Margin="560,79,0,0" VerticalAlignment="Top" Width="100"/>
+            Command="{Binding UserProfileSaveCommand}"
+            Content="Save" HorizontalAlignment="Left" Height="36" Margin="484,192,0,0" VerticalAlignment="Top" Width="186" Grid.Row="2"/>
+
+
+
     </Grid>
 </Window>
