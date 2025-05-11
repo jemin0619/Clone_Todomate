@@ -2,13 +2,14 @@
 using System.Text.Json;
 using System.Windows;
 using CommunityToolkit.Mvvm.ComponentModel;
+using Clone_Todomate.Utils;
 
 namespace Clone_Todomate.Models.Repository
 {
     public class UserProfileRepository : ObservableObject, IUserProfileRepository
     {
-        private const string DataPath = "Data";
-        private const string UserProfileFilePath = "Data\\userProfile.json";
+        private static readonly string DataPath = Constants.UserProfileDataDirectory;
+        private static readonly string UserProfileFilePath = Path.Combine(DataPath, Constants.UserProfileDataFileName);
 
         public UserProfileModel? GetUserProfile()
         {

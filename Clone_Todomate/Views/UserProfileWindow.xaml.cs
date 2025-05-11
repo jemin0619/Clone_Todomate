@@ -1,4 +1,5 @@
 ﻿using System.Windows;
+using Clone_Todomate.Models.Repository;
 using Clone_Todomate.ViewModels;
 
 namespace Clone_Todomate.Views
@@ -6,12 +7,12 @@ namespace Clone_Todomate.Views
     /// <summary>
     /// Interaction logic for MainWindow.xaml
     /// </summary>
-    public partial class MainWindow : Window
+    public partial class UserProfileWindow : Window
     {
-        public MainWindow()
+        public UserProfileWindow()
         {
             InitializeComponent();
-            this.DataContext = new MainViewModel();
+            this.DataContext = new UserProfileViewModel(new UserProfileRepository());
         }
     }
 }
