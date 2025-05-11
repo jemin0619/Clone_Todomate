@@ -10,7 +10,7 @@ namespace Clone_Todomate
     {
         private void Application_Startup(object sender, StartupEventArgs e)
         {
-            MainWindow main = new();
+            UserProfileWindow main = new();
             main.Show();
         }
     }

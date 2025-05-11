@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Clone_Todomate.Models.Fields;
 using Clone_Todomate.Models.Repository;
 using Clone_Todomate.ViewModels;
 
@@ -10,27 +11,37 @@ namespace Clone_Todomate.Commands
 {
     public class UserProfileSaveEditCommand : CommandBase
     {
-        private MainViewModel _mainViewModel;
+        private UserProfileViewModel _mainViewModel;
         private IUserProfileRepository _userProfileRepository;
-        private string _type;
+        private UserProfileField _userProfileField;
 
-        public UserProfileSaveEditCommand(MainViewModel mainViewModel, IUserProfileRepository userProfileRepository, string type)
+        public UserProfileSaveEditCommand(UserProfileViewModel mainViewModel, IUserProfileRepository userProfileRepository, UserProfileField userProfileField)
         {
             _mainViewModel = mainViewModel;
             _userProfileRepository = userProfileRepository;
-            _type = type;
+            _userProfileField = userProfileField;
         }
         public override bool CanExecute(object? parameter)
         {
-            if(_type.Equals("Name")) return CanExecute_Name();
-            if (_type.Equals("Description")) return CanExecute_Description();
-            return false;
+            return _userProfileField switch
+            {
+                UserProfileField.Name => CanExecute_Name(),
+                UserProfileField.Description => CanExecute_Description(),
+                _ => false
+            };
         }
 
         public override void Execute(object? parameter)
         {
-            if (_type.Equals("Name")) Execute_Name();
-            if (_type.Equals("Description")) Execute_Description();
+            switch(_userProfileField)
+            {
+                case UserProfileField.Name:
+                    Execute_Name();
+                    break;
+                case UserProfileField.Description:
+                    Execute_Description();
+                    break;
+            }
         }
 
         private bool CanExecute_Name()
@@ -80,7 +91,7 @@ namespace Clone_Todomate.Commands
             if (_mainViewModel.UserProfileControlButton.UserDescriptionEditEnable == false)
             {
                 _mainViewModel.UserProfileControlButton.UserDescriptionEditEnable = true;
-                _mainViewModel.UserProfile.UserDescriptionTemp = _mainViewModel.UserProfile.UserDescriptionTemp;
+                _mainViewModel.UserProfile.UserDescriptionTemp = _mainViewModel.UserProfile.UserDescription;
             }
 
             //저장하는 경우
